@@ -70,11 +70,4 @@ gulp.task("min:js", function () {
     .pipe(gulp.dest("."));
 });
 
-gulp.task("min:css", function () {
-  return gulp.src([paths.css, "!" + paths.minCss])
-    .pipe(concat(paths.concatCssDest))
-    .pipe(cssmin())
-    .pipe(gulp.dest("."));
-});
-
 gulp.task("min", ["min:js", "sass", "images"]);
