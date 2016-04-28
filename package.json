@@ -1,13 +1,15 @@
 {
   "name": "ChingChongCha",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "devDependencies": {
+    "eslint": "^2.8.0",
     "eslint-config-meerkats": "^1.0.6",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-bless": "^3.1.0",
     "gulp-concat": "2.5.2",
     "gulp-cssmin": "0.1.7",
+    "gulp-dnx": "^0.3.0",
     "gulp-minify": "0.0.11",
     "gulp-minify-css": "^1.2.4",
     "gulp-rename": "^1.2.2",

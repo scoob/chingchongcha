@@ -1,27 +1,24 @@
-/// <binding Clean='clean' />
-"use strict";
+const gulp = require('gulp');
+const rimraf = require('rimraf');
+const concat = require('gulp-concat');
+const sass = require('gulp-sass');
+const bless = require('gulp-bless');
+const minify = require('gulp-minify-css');
+const autoprefixer = require('gulp-autoprefixer');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const dnx = require('gulp-dnx');
 
-var gulp = require("gulp"),
-  rimraf = require("rimraf"),
-  concat = require("gulp-concat"),
-  cssmin = require("gulp-cssmin"),
-  sass = require("gulp-sass"),
-  bless = require("gulp-bless"),
-  minify = require("gulp-minify-css"),
-  autoprefixer = require("gulp-autoprefixer"),
-  uglify = require("gulp-uglify"),
-  rename = require("gulp-rename");
+const webroot = './wwwroot/';
 
-var webroot = "./wwwroot/";
-
-var paths = {
-  js: webroot + "js/**/*.js",
-  minJs: webroot + "js/**/*.min.js",
-  css: webroot + "css/**/*.css",
-  images: "images/*",
-  scss: "stylesheets/*.scss",
-  sassDest: webroot + "css",
-  cssDest: webroot + "css",
+const paths = {
+  js: webroot + 'js/**/*.js',
+  minJs: webroot + 'js/**/*.min.js',
+  css: webroot + 'css/**/*.css',
+  images: 'images/*',
+  scss: 'stylesheets/*.scss',
+  sassDest: webroot + 'css',
+  cssDest: webroot + 'css',
   minCss: webroot + "css/**/*.min.css",
   concatJsDest: webroot + "js/site.min.js",
   concatCssDest: webroot + "css/styles.min.css",
