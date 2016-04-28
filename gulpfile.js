@@ -7,7 +7,7 @@ var gulp = require("gulp"),
   cssmin = require("gulp-cssmin"),
   sass = require("gulp-sass"),
   bless = require("gulp-bless"),
-  minify = require("gulp-minify"),
+  minify = require("gulp-minify-css"),
   autoprefixer = require("gulp-autoprefixer"),
   uglify = require("gulp-uglify"),
   rename = require("gulp-rename");
@@ -18,11 +18,14 @@ var paths = {
   js: webroot + "js/**/*.js",
   minJs: webroot + "js/**/*.min.js",
   css: webroot + "css/**/*.css",
-  scss: "Stylesheets/*.scss",
+  images: "images/*",
+  scss: "stylesheets/*.scss",
   sassDest: webroot + "css",
   cssDest: webroot + "css",
   minCss: webroot + "css/**/*.min.css",
-  concatJsDest: webroot + "js/site.min.js"
+  concatJsDest: webroot + "js/site.min.js",
+  concatCssDest: webroot + "css/styles.min.css",
+  imageDest: webroot + "images"
 };
 
 gulp.task("clean:js", function (cb) {
@@ -33,9 +36,13 @@ gulp.task("clean:css", function (cb) {
   rimraf(paths.concatCssDest, cb);
 });
 
+gulp.task("clean:images", function (cb) {
+  rimraf(paths.imageDest, cb);
+});
+
 gulp.task('images', function () {
-  return gulp.src(config.files.images)
-    .pipe(gulp.dest(config.dirs.images.dest));
+  return gulp.src(paths.images)
+    .pipe(gulp.dest(paths.imageDest));
 });
 
 gulp.task('sass', function () {
@@ -43,13 +50,16 @@ gulp.task('sass', function () {
     .pipe(sass())
     .pipe(autoprefixer('last 3 version', '> 1%'))
     .pipe(gulp.dest(paths.sassDest))
-    .pipe(cssmin())
+    .pipe(minify({
+        processImport: false,
+        shorthandCompacting: false
+      }))
     .pipe(rename({ suffix: '.min' }))
     .pipe(bless())
     .pipe(gulp.dest(paths.cssDest));
 });
 
-gulp.task("clean", ["clean:js", "clean:css"]);
+gulp.task("clean", ["clean:js", "clean:css", "clean:images"]);
 
 gulp.task("min:js", function () {
   return gulp.src([paths.js, "!" + paths.minJs], {
@@ -67,4 +77,4 @@ gulp.task("min:css", function () {
     .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js", "sass"]);
+gulp.task("min", ["min:js", "sass", "images"]);
