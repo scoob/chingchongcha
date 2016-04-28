@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ChingChongCha</title>
     <environment names="Development">
       <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-      <link rel="stylesheet" href="~/css/styles.css" />
+      <link rel="stylesheet" href="~/stylesheets/styles.css" />
     </environment>
     <environment names="Staging,Production">
       <link
         rel="stylesheet"
-        href="h~/lib/bootstrap/dist/css/bootstrap.min.css"
+        href="~/lib/bootstrap/dist/css/bootstrap.min.css"
         asp-fallback-test-class="sr-only"
         asp-fallback-test-property="position"
         asp-fallback-test-value="absolute" />
       <link
         rel="stylesheet"
-        href="~/css/styles.min.css"
+        href="~/stylesheets/styles.min.css"
         asp-append-version="true" />
     </environment>
   </head>
-  <body>
+  <body ng-controller="AppController as appController">
     <div class="container body-content">
       @RenderBody()
       <footer>
@@ -40,12 +40,12 @@
         asp-append-version="true">
       </script>
       <script
-        src="~/lib/angular/angular.js"
+        src="~/scripts/app.index.js"
         type="text/javascript"
         asp-append-version="true">
       </script>
       <script
-        src="~/js/site.js"
+        src="~/scripts/modernizr-custom.min.js"
         type="text/javascript"
         asp-append-version="true">
       </script>
@@ -60,7 +60,12 @@
         asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
       </script>
       <script
-        src="~/js/site.min.js"
+        src="~/scripts/app.index.min.js"
+        type="text/javascript"
+        asp-append-version="true">
+      </script>
+      <script
+        src="~/scripts/modernizr-custom.min.js"
         type="text/javascript"
         asp-append-version="true">
       </script>

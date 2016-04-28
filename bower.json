@@ -2,7 +2,6 @@
   "name": "ChingChongCha",
   "private": true,
   "dependencies": {
-    "angular": "1.5.5",
     "bootstrap": "3.3.5",
     "jquery": "2.1.4",
     "jquery-validation": "1.14.0",
