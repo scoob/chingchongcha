@@ -1,10 +1,6 @@
 {
-  "extends": "airbnb",
+  "extends": "meerkats",
   "rules": {
-    "prefer-template": off,
-    "prefer-arrow-callback": off,
-    "func-names": off,
-    "comma-dangle": off,
     "strict": 0
   }
 }
