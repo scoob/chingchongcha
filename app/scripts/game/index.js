@@ -15,14 +15,21 @@ angular.module(MODULE_NAME, [])
  * Service to control the scoring
  */
 // @ngInject
-.service('GameService', function GameService() {
+.service('GameService', function GameService($sessionStorage) {
   const service = this;
-  const rounds = [];
+  if (typeof $sessionStorage.rounds === undefined) {
+    $sessionStorage.rounds = [];
+  }
   const hands = ['rock', 'paper', 'scissors'];
   const winningMap = {
     rock: 'scissors',
     paper: 'rock',
     scissors: 'paper'
+  };
+  const playerMap = {
+    player1: 'You',
+    player2: 'Computer',
+    tie: 'Tie'
   };
   service.play = (hand) => {
     const player1 = hands[hand];
@@ -42,13 +49,14 @@ angular.module(MODULE_NAME, [])
     return 'player2';
   };
   service.addRound = (winner, player1, player2) => {
-    rounds.push({
-      round: rounds.length + 1,
-      winner,
+    $sessionStorage.rounds.push({
+      round: $sessionStorage.rounds.length + 1,
+      winner: playerMap[winner],
       player1,
       player2
     });
   };
+  service.getLatestResult = () => $sessionStorage.rounds[$sessionStorage.rounds.length - 1];
 })
 /**
  * @ngdoc controller
@@ -62,6 +70,7 @@ angular.module(MODULE_NAME, [])
   const controller = this;
   controller.play = (hand) => GameService.play(hand);
   controller.updateScore = (winner) => ScoreboardService.updateScore(winner);
+  controller.getLatestResult = () => GameService.getLatestResult();
 })
 .directive('playButton', () => ({
   restrict: 'A',
@@ -70,8 +79,19 @@ angular.module(MODULE_NAME, [])
   link: function ($scope, $element, attr, controller) {
     $element.on('click', () => {
       const winner = controller.play(attr.type);
-      console.log(winner);
-      controller.updateScore(winner);
+      $scope.$apply(() => controller.updateScore(winner));
+    });
+  }
+}))
+.directive('gameResult', () => ({
+  restrict: 'A',
+  controller: 'GameController',
+  link: function ($scope, $element, attr, controller) {
+    $scope.$watch(controller.getLatestResult, (result, oldResult) => {
+      if (result === oldResult) {
+        return;
+      }
+      $element.text(result.winner);
     });
   }
 }));
