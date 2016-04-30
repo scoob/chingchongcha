@@ -1,9 +1,15 @@
 @import 'html/normalise';
+@import 'font-awesome/scss/font-awesome';
 // Mixins
 @import 'mixins/fonts';
+@import 'mixins/colors';
 // Settings
 @import 'settings/fonts';
+@import 'settings/colors';
 //html
 @import 'html/typography';
+//layout
+@import 'layout/grid';
 // Components
 @import 'components/scoreboard';
+@import 'components/panel';

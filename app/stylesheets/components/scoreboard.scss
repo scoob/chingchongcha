@@ -3,6 +3,9 @@
   text-align:center;
   .score {
     @include font-size(32px);
+    margin:0 5px;
+    padding:0 0 20px;
+    border:1px solid color(grey, light);
   }
   .score-title {
     @include font-size(24px);
