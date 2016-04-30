@@ -7,26 +7,38 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4">
-    <h3>You</h3>
+  <div class="col-md-12">
+    <h3>Game Mode</h3>
+    <button class="button game-mode"></button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 panel panel-player player-human">
+    <h3 class="panel-title">You</h3>
   </div>
   <div class="col-md-4">
-    <div class="scoreboard">
-      <div class="col-md-4 score">
-        <h3 class="score-title">Wins</h3>
-        {{PLAYER1}}
+    <div class="scoreboard no-gutter">
+      <div class="col-md-4">
+        <div class="score">
+          <h3 class="score-title">Wins</h3>
+          <span score-player player="player1">{{score}}</span>
+        </div>
       </div>
-      <div class="col-md-4 score">
-        <h3 class="score-title">Ties</h3>
-        {{TIE}}
+      <div class="col-md-4">
+        <div class="score">
+          <h3 class="score-title">Ties</h3>
+          <span score-player player="tie">{{score}}</span>
+        </div>
       </div>
-      <div class="col-md-4 score">
-        <h3 class="score-title">Wins</h3>
-        {{PLAYER2}}
+      <div class="col-md-4">
+        <div class="score">
+          <h3 class="score-title">Wins</h3>
+          <span score-player player="player2">{{score}}</span>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <h3>Computer</h3>
+  <div class="col-md-4 panel panel-player player-computer">
+    <h3 class="panel-title">Computer</h3>
   </div>
 </div>
