@@ -1,7 +1,7 @@
 /**
-* Module: onboarding
+* Module: scoreboard
 *
-* Controllers for managing the onboarding process
+* Controls for managing the scoring process
 */
 
 const MODULE_NAME = module.exports = 'scoreboard';
@@ -21,42 +21,53 @@ angular.module(MODULE_NAME, [])
   const service = this;
   service.init = () => {
     $sessionStorage.scores = {
-      PLAYER1: 0,
-      PLAYER2: 0,
-      TIE: 0
+      player1: 0,
+      player2: 0,
+      tie: 0
     };
   };
   service.updateScore = (player) => $sessionStorage.scores[player]++;
   service.getScore = (player) => $sessionStorage.scores[player];
+  service.getScores = () => $sessionStorage.scores;
 })
 /**
  * @ngdoc controller
- * @name onboarding.controller:OnboardingSiteSelectController
+ * @name scoreboard.controller:ScoreboardController
  * @description
- * Allows user to select the current site they want to set up
+ * INitialise the scoreboard and allow the scoreboard to get all scores
  */
 // @ngInject
 .controller('ScoreboardController', function ScoreboardController(ScoreboardService) {
   const controller = this;
   // initialise the scoreboard
-  ScoreboardService.init();
-  // get a players score
+  controller.init = ScoreboardService.init;
+  // get a specific players score
   controller.getScore = (player) => ScoreboardService.getScore(player);
+  controller.getScores = () => ScoreboardService.getScores();
+  controller.updateScore = (player) => ScoreboardService.updateScore(player);
+  controller.init();
 })
 /**
  * @ngdoc directive
- * @name scoreboard.directive:scoreboard
+ * @name scoreboard.directive:scorePlayer
  * @restrict C
  * @description
- * Populate scores
+ * Populate player's score
  */
  // @ngInject
-.directive('scoreboard', () => ({
-  restrict: 'C',
+.directive('scorePlayer', () => ({
+  restrict: 'A',
   controller: 'ScoreboardController',
-  link: function ($scope, $element, attr, controller) {
-    $scope.PLAYER1 = controller.getScore('PLAYER1');
-    $scope.PLAYER2 = controller.getScore('PLAYER2');
-    $scope.TIE = controller.getScore('TIE');
+  scope: true,
+  link: function ($scope, element, attr, controller) {
+    // $scope.score = controller.getScore(attr.player);
+    $scope.$watchCollection(controller.getScores, (score, oldScore) => {
+      // initial load of page
+      if (score === oldScore) {
+        $scope.score = controller.getScore(attr.player);
+        return;
+      }
+      $scope.score = score[attr.player];
+    });
   }
 }));
