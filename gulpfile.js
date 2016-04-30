@@ -9,6 +9,7 @@
  */
 const config = require('./gulp/config');
 const gulp = require('gulp');
+const dnx = require('gulp-dnx');
 const runSequence = require('run-sequence').use(gulp);
 
 // Custom subtasks defined for this project
@@ -18,10 +19,20 @@ const lint = require('./gulp/tasks/lint')(config);
 const scripts = require('./gulp/tasks/scripts')(config);
 const clean = require('./gulp/tasks/clean')(config);
 const images = require('./gulp/tasks/images')(config);
+const watch = require('./gulp/tasks/watch')(config);
+
+const options = {
+  restore: false,
+  build: false,
+  run: true,
+  cwd: './'
+};
+
+gulp.task('dnxdev', dnx('dev', options));
 
 // Clean and compile all static assets with static analysis warnings
 gulp.task('development', function (callback) {
-  runSequence(clean, lint, [scripts, stylesheets, images], [modernizr], callback);
+  runSequence(clean, lint, [scripts, stylesheets, images], [modernizr], [watch, 'dnxdev'], callback);
 });
 
 // Clean and compile all static assets
