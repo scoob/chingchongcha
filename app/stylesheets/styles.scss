@@ -1,2 +1,9 @@
+@import 'html/normalise';
+// Mixins
+@import 'mixins/fonts';
+// Settings
 @import 'settings/fonts';
+//html
+@import 'html/typography';
+// Components
 @import 'components/scoreboard';

@@ -1,1 +1,26 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,600,300);
+
+// Font settings
+$font-size:16px;
+$line-height:1.2;
+
+$fonts:(
+  opensans:(
+    light:(
+      family:'Open Sans',
+      weight:300
+    ),
+    regular:(
+      family:'Open Sans',
+      weight:400
+    ),
+    bold:(
+      family:'Open Sans',
+      weight:600
+    ),
+    extrabold:(
+      family:'Open Sans',
+      weight:800
+    )
+  )
+);

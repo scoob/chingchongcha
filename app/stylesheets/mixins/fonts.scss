@@ -1,0 +1,38 @@
+// Turns font-size properties in to rem and a px fallback
+//
+// @param {string} the pixel unit
+// @param {string} optional line-height pixel unit
+@mixin font-size($size, $line-height:null) {
+  font-size:$size;
+  font-size:get-rem($size);
+  @if $line-height != null {
+    line-height:$line-height / $size;
+  }
+  @content;
+}
+// Loop through $fonts map from settings/config
+// and generate font styling for custom web fonts.
+// e.g. @include font(panton, bold);
+//
+// @param {string} $name Name of font within $font-map
+// @param {string} $weight Mapped value of font weight
+// @param {string} $fonts-map Map list of fonts
+@mixin font($name, $weight:normal, $fonts-map:$fonts) {
+  @if map-has-key($fonts-map, $name) {
+    $font:map-get(map-get($fonts-map, $name), $weight);
+    $font-family:map-get($font, family);
+    $font-weight:map-get($font, weight);
+    $font-fallback:map-get(map-get($fonts-map, $name), fallback);
+    @if $font-fallback {
+     font-family:$font-family, $font-fallback;
+    }
+    @else {
+     font-family:$font-family;
+    }
+    font-weight:$font-weight;
+  }
+  @else {
+    @error "Font name is incorrect. Check $fonts-map map and font() @include for errors.";
+  }
+  @content;
+}

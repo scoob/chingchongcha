@@ -1,0 +1,17 @@
+body {
+  @include font(opensans, light);
+  @include font-size(18px);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  @include font(opensans, extrabold);
+  text-transform:uppercase;
+}
+
+h1 {
+  @include font-size(48px);
+}

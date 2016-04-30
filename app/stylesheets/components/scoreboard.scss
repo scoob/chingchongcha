@@ -1,3 +1,10 @@
 .scoreboard {
+  @include font(opensans, extrabold);
   text-align:center;
+  .score {
+    @include font-size(32px);
+  }
+  .score-title {
+    @include font-size(24px);
+  }
 }
