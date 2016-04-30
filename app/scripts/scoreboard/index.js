@@ -44,7 +44,6 @@ angular.module(MODULE_NAME, [])
   controller.getScore = (player) => ScoreboardService.getScore(player);
   controller.getScores = () => ScoreboardService.getScores();
   controller.updateScore = (player) => ScoreboardService.updateScore(player);
-  controller.init();
 })
 /**
  * @ngdoc directive
