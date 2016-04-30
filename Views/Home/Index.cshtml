@@ -8,13 +8,20 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <h3>Game Mode</h3>
-    <button class="button game-mode"></button>
+    <div class="panel panel-mode">
+      <div class="panel-wrapper">
+        <h3>Game Mode</h3>
+        <button class="button button-mode" mode-button mode="human">Human</button>
+        <button class="button button-mode button-disabled" mode-button mode="computer">Computer</button>
+      </div>
+    </div>
   </div>
 </div>
 <div class="row">
   <div class="col-md-4 panel panel-player player-human">
     <h3 class="panel-title">You</h3>
+    <div class="panel-wrapper">
+    </div>
   </div>
   <div class="col-md-4">
     <div class="scoreboard no-gutter">
@@ -40,5 +47,7 @@
   </div>
   <div class="col-md-4 panel panel-player player-computer">
     <h3 class="panel-title">Computer</h3>
+    <div class="panel-wrapper">
+    </div>
   </div>
 </div>

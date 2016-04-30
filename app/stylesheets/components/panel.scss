@@ -1,18 +1,29 @@
 .panel {
-  background-repeat:no-repeat;
-  background-size:contain;
-  &.player-human {
-    background-image:url('../images/player-human.png');
-    text-align:left;
-  }
-  &.player-computer {
-    background-image:url('../images/player-robot.png');
-    background-position:right;
-    text-align:right;
-  }
   .panel-title {
     margin:0;
     padding:100px 80px 10px 60px;
     border-bottom:1px solid color(grey, light);
+    background-repeat:no-repeat;
+    background-size:contain;
+  }
+  &.player-human {
+    .panel-title {
+      background-image:url('../images/player-human.png');
+      text-align:left;
+    }
+  }
+  &.player-computer {
+    .panel-title {
+      background-image:url('../images/player-robot.png');
+      background-position:right;
+      text-align:right;
+    }
+  }
+  &-mode {
+    margin-bottom:30px;
+    background:color(grey, extralight);
+  }
+  &-wrapper {
+    padding:20px;
   }
 }

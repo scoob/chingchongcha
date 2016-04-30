@@ -1,6 +1,21 @@
 .button {
-  .text {
-    background:pink;
-    color:white;
+  @include font(opensans, extrabold);
+  @include font-size(20px);
+  display:inline-block;
+  padding:15px 25px;
+  border:0;
+  border-radius:3px;
+  color:color(white);
+  text-transform:uppercase;
+  &:hover {
+    transform:translateY(3px);
+  }
+  &-mode {
+    border-bottom:5px solid color(pink, light);
+    background:color(pink, default);
+  }
+  &-disabled {
+    border-bottom:5px solid color(grey, light);
+    background:color(grey, default);
   }
 }
