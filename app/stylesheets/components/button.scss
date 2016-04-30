@@ -10,12 +10,39 @@
   &:hover {
     transform:translateY(3px);
   }
-  &-mode {
-    border-bottom:5px solid color(pink, light);
-    background:color(pink, default);
-  }
-  &-disabled {
+  &-inactive {
     border-bottom:5px solid color(grey, light);
     background:color(grey, default);
   }
+  &-switch {
+    position:relative;
+    margin:0;
+    padding:15px 30px;
+    border-radius:5px;
+    background:color(pink, default);
+    cursor:pointer;
+    transition:all 0.5s ease-in;
+    &:before {
+      display:block;
+      position:absolute;
+      top:2px;
+      left:2px;
+      width:26px;
+      height:26px;
+      border-radius:3px;
+      background:color(white);
+      content:'';
+    }
+    input[type=checkbox]:checked + & {
+      &:before {
+        right:2px;
+        left:auto;
+      }
+    }
+  }
+}
+[type=checkbox] {
+  position:absolute;
+  left:-9999px;
+  opacity:0;
 }

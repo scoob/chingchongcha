@@ -1,22 +1,29 @@
 .panel {
   .panel-title {
     margin:0;
-    padding:100px 80px 10px 60px;
+    padding:100px 80px 10px;
     border-bottom:1px solid color(grey, light);
     background-repeat:no-repeat;
     background-size:contain;
   }
-  &.player-human {
+  &.player-1 {
     .panel-title {
       background-image:url('../images/player-human.png');
       text-align:left;
     }
   }
-  &.player-computer {
+  &.player-2,
+  &.computer-mode {
     .panel-title {
       background-image:url('../images/player-robot.png');
       background-position:right;
       text-align:right;
+    }
+  }
+  &.computer-mode {
+    .panel-title {
+      background-position:left;
+      text-align:left;
     }
   }
   &-mode {

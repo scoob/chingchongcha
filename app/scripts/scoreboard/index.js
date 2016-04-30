@@ -10,11 +10,9 @@ angular.module(MODULE_NAME, [])
 /**
  * @ngdoc service
  * @name dataservices.service:ScoreboardService
- * @param $http {object} asyncronous protocol call
- * @param $localStorage {object} local storage to access token
- * @return $http {function} Data from API
+ * @param $sessionStorage {object} local storage to access token
  * @description
- * Service to access data from API
+ * Service to control the scoring
  */
 // @ngInject
 .service('ScoreboardService', function ScoreboardService($sessionStorage) {
@@ -33,8 +31,9 @@ angular.module(MODULE_NAME, [])
 /**
  * @ngdoc controller
  * @name scoreboard.controller:ScoreboardController
+ * @param ScoreboardService {object} session storage to access scores
  * @description
- * INitialise the scoreboard and allow the scoreboard to get all scores
+ * Initialise the scoreboard and allow the scoreboard to get all scores
  */
 // @ngInject
 .controller('ScoreboardController', function ScoreboardController(ScoreboardService) {

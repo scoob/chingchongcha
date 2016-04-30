@@ -11,14 +11,17 @@
     <div class="panel panel-mode">
       <div class="panel-wrapper">
         <h3>Game Mode</h3>
-        <button class="button button-mode" mode-button mode="human">Human</button>
-        <button class="button button-mode button-disabled" mode-button mode="computer">Computer</button>
+        <div class="switchboard">
+          <span>Human</span>
+          <input id="game-mode" type="checkbox" mode-button ng-model="mode" /><label for="game-mode" class="button-switch"></label>
+          <span>Computer</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 panel panel-player player-human">
+  <div class="col-md-4 panel panel-player player-1" mode-state ng-class="{'computer-mode': mode}">
     <h3 class="panel-title">You</h3>
     <div class="panel-wrapper">
     </div>
@@ -45,7 +48,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4 panel panel-player player-computer">
+  <div class="col-md-4 panel panel-player player-2">
     <h3 class="panel-title">Computer</h3>
     <div class="panel-wrapper">
     </div>

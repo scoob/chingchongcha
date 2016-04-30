@@ -1,0 +1,15 @@
+.switchboard {
+  overflow:hidden;
+  span {
+    @include font(opensans, bold);
+    @include font-size(21px, 30px);
+    display:inline-block;
+    float:left;
+    color:color(grey, medium);
+    text-transform:uppercase;
+  }
+  label {
+    float:left;
+    margin:0 10px;
+  }
+}
