@@ -3,6 +3,7 @@
 }
 <div class="row">
   <div class="col-md-12">
+    <span class="countdown right"></span>
     <h1>Rock, Paper and Scissors</h1>
   </div>
 </div>
@@ -35,6 +36,9 @@
         <div class="col-md-4">
           <a play-button type="2" class="button button-icon"><span class="fa fa-hand-scissors-o"></span>Scissors</a>
         </div>
+        <!-- <div class="col-md-12">
+          <span class="players-hand" player="player1"><i class="fa fa-hand-{{hand}}-o"></i><span>{{hand}}</span></span>
+        </div>//-->
       </div>
     </div>
   </div>
@@ -82,6 +86,8 @@
   <div class="col-md-4 panel panel-player player-2">
     <h3 class="panel-title">Player 2</h3>
     <div class="panel-wrapper">
+      <span class="players-hand" player="player2"><i class="fa fa-hand-{{hand}}-o"></i><span class="choice-text">{{hand}}</span></span>
+      <span id="loading-circle" class="loading-circle">choosing...</span>
     </div>
   </div>
 </div>

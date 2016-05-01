@@ -11,8 +11,9 @@
   cursor:pointer;
   text-align:center;
   text-transform:uppercase;
-  transition:transform 0.2s ease-in;
-  &:hover {
+  transition:all 0.1s ease-in;
+  &:hover,
+  &.active {
     border-bottom:5px solid color(orange, light);
     background:color(orange, default);
     color:color(white);

@@ -1,0 +1,33 @@
+.game-winner {
+  margin-left:15px;
+  color:color(green, default);
+  &.tie-game {
+    color:color(orange, default);
+  }
+  &.player-2-game {
+    color:color(red, flat);
+  }
+}
+.players-hand {
+  @include font(opensans, extrabold);
+  @include font-size(40px);
+  display:block;
+  text-align:center;
+  text-transform:uppercase;
+  .fa {
+    @include font-size(120px);
+    margin-bottom:20px;
+  }
+  .choice-text {
+    display:block;
+  }
+}
+.loading-circle {
+  @include font(opensans, extrabold);
+  @include font-size(40px);
+  display:none;
+  text-align:center;
+  &.active {
+    display:block;
+  }
+}
