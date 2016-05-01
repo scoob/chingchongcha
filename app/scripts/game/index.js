@@ -50,14 +50,14 @@ angular.module(MODULE_NAME, [])
     return 'player2';
   };
   service.addResult = (winner, player1, player2) => {
-    $sessionStorage.results.push({
+    $sessionStorage.results.unshift({
       round: $sessionStorage.results.length + 1,
       winner: playerMap[winner],
       player1,
       player2
     });
   };
-  service.getLatestResult = () => $sessionStorage.results[$sessionStorage.results.length - 1];
+  service.getLatestResult = () => $sessionStorage.results[0];
   service.getResults = () => $sessionStorage.results;
   service.getGameCount = () => Object.keys($sessionStorage.results).length;
 })

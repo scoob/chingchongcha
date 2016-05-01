@@ -9,22 +9,31 @@
   }
 }
 .results-list {
-  ul {
-    margin:0;
-    padding:0;
-    list-style:none;
-  }
   .results-list-header {
     @include font-size(21px);
     @include font(opensans, bold);
     overflow:hidden;
-    margin:0 0 10px;
     padding:0 0 10px;
     border-bottom:1px solid color(grey, extralight);
+    text-align:center;
+  }
+  .results-wrapper {
+    overflow:scroll;
+    overflow-x:hidden;
+    height:305px;
+    margin:0;
+    padding:0;
+    list-style:none;
   }
   .result-item {
-    @include font-size(21px);
+    @include font-size(21px, 40px);
+    overflow:hidden;
+    padding:5px;
+    border-bottom:1px solid color(grey, extralight);
     text-align:center;
+    &:first-child {
+      background:color(grey, extralight);
+    }
     .fa {
       @include font-size(40px);
     }
