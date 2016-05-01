@@ -1,40 +1,37 @@
-# Welcome to ASP.NET 5
+# Welcome to Rock Paper Scissors
 
-We've made some big updates in this release, so it’s **important** that you spend a few minutes to learn what’s new.
+It's a one page Angular app, that allows you to play Rock Paper Scissors in either human or computer mode. It has a simple countdown time so you know when your 60 minutes is up.
 
-You've created a new ASP.NET 5 project. [Learn what's new](http://go.microsoft.com/fwlink/?LinkId=518016)
+## Browser requirements
 
-## This application consists of:
+- Any modern Browser
 
-*   Sample pages using ASP.NET MVC 6
-*   [Gulp](http://go.microsoft.com/fwlink/?LinkId=518007) and [Bower](http://go.microsoft.com/fwlink/?LinkId=518004) for managing client-side libraries
-*   Theming using [Bootstrap](http://go.microsoft.com/fwlink/?LinkID=398939)
+## Software requirements
+- `npm` & `bower` & `kestrel` & `gulp`
+- If you're on Mac OS X you will need to run Mono and install ASP.Net core.
 
-## How to
+## How to run
+- `npm install` & `bower install`
+- Run `gulp` and go to `http://localhost:5000`
 
-*   [Add a Controller and View](http://go.microsoft.com/fwlink/?LinkID=398600)
-*   [Add an appsetting in config and access it in app.](http://go.microsoft.com/fwlink/?LinkID=699562)
-*   [Manage User Secrets using Secret Manager.](http://go.microsoft.com/fwlink/?LinkId=699315)
-*   [Use logging to log a message.](http://go.microsoft.com/fwlink/?LinkId=699316)
-*   [Add packages using NuGet.](http://go.microsoft.com/fwlink/?LinkId=699317)
-*   [Add client packages using Bower.](http://go.microsoft.com/fwlink/?LinkId=699318)
-*   [Target development, staging or production environment.](http://go.microsoft.com/fwlink/?LinkId=699319)
+## Unit Tests
+- Unit tests are run using `karma`. Spec files are written using `chai` syntax.
 
-## Overview
+### Running Tests
+- Run `karma start karma.conf.js`
 
-*   [Conceptual overview of what is ASP.NET 5](http://go.microsoft.com/fwlink/?LinkId=518008)
-*   [Fundamentals of ASP.NET 5 such as Startup and middleware.](http://go.microsoft.com/fwlink/?LinkId=699320)
-*   [Working with Data](http://go.microsoft.com/fwlink/?LinkId=398602)
-*   [Security](http://go.microsoft.com/fwlink/?LinkId=398603)
-*   [Client side development](http://go.microsoft.com/fwlink/?LinkID=699321)
-*   [Develop on different platforms](http://go.microsoft.com/fwlink/?LinkID=699322)
-*   [Read more on the documentation site](http://go.microsoft.com/fwlink/?LinkID=699323)
+### Spec locations
+```
+/scripts
+   |-- alert
+       |-- alert.spec.js
+       |-- index.js
+```
 
-## Run & Deploy
+# Author
 
-*   [Run your app](http://go.microsoft.com/fwlink/?LinkID=517851)
-*   [Run your app on .NET Core](http://go.microsoft.com/fwlink/?LinkID=517852)
-*   [Run commands in your project.json](http://go.microsoft.com/fwlink/?LinkID=517853)
-*   [Publish to Microsoft Azure Web Apps](http://go.microsoft.com/fwlink/?LinkID=398609)
+Simon Scheepers
 
-We would love to hear your [feedback](http://go.microsoft.com/fwlink/?LinkId=518015)
+# Repository
+
+https://github.com/scoob/chingchongcha
