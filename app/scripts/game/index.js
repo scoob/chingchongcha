@@ -74,7 +74,7 @@ angular.module(MODULE_NAME, [])
    */
   service.addResult = (winner) => {
     $sessionStorage.results.unshift({
-      game: $sessionStorage.results.length + 1,
+      round: $sessionStorage.results.length + 1,
       winner: playerMap[winner],
       player1,
       player2
