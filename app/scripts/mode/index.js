@@ -17,7 +17,12 @@ angular.module(MODULE_NAME, [])
 // @ngInject
 .service('ModeService', function ModeService($sessionStorage) {
   const service = this;
-  service.init = () => $sessionStorage.mode = 0; // 0 = human, 1 = computer
+  // initialise the mode on initial load
+  service.init = () => {
+    if (!$sessionStorage.mode) {
+      $sessionStorage.mode = 0; // 0 = human, 1 = computer
+    }
+  };
   service.setMode = (mode) => $sessionStorage.mode = mode;
   service.getMode = () => $sessionStorage.mode;
 })
@@ -31,8 +36,10 @@ angular.module(MODULE_NAME, [])
 // @ngInject
 .controller('ModeController', function ModeController(ModeService) {
   const controller = this;
+  controller.init = ModeService.init;
   controller.setMode = (mode) => ModeService.setMode(mode);
   controller.getMode = () => ModeService.getMode();
+  controller.init();
 })
 /**
  * @ngdoc directive

@@ -15,13 +15,9 @@ angular.module(MODULE_NAME, [])
  * Service to control game
  */
 // @ngInject
-.service('GameService', function GameService($sessionStorage) {
+.service('GameService', function GameService($sessionStorage, ModeService) {
   const service = this;
-  if (!$sessionStorage.results) {
-    $sessionStorage.results = [];
-  }
-  let player1 = null;
-  let player2 = null;
+  // Useful maps for game control
   const hands = ['rock', 'paper', 'scissors'];
   const winningMap = {
     rock: 'scissors',
@@ -33,14 +29,36 @@ angular.module(MODULE_NAME, [])
     player2: 'Player 2',
     tie: 'Tie'
   };
+  // initialise player choices
+  let player1 = null;
+  let player2 = null;
+  // Initialise results if none exist
+  service.init = () => {
+    if (!$sessionStorage.results) {
+      $sessionStorage.results = [];
+    }
+  };
+  /**
+   * Get player choices and calculate
+   * the winner and store the result
+   * @return winner {string}
+   */
   service.play = (hand) => {
-    player1 = hands[hand];
-    player2 = hands[service.randomHand()];
+    player1 = ModeService.getMode() ? hands[service.randomHand()] : hands[hand]; // get the human choice
+    player2 = hands[service.randomHand()]; // get computer choice
     const winner = service.getWinner();
     service.addResult(winner);
     return winner;
   };
+  /**
+   * Calculate the computers choice randomly
+   * @return hand index {integer}
+   */
   service.randomHand = () => Math.floor(Math.random() * 3);
+  /**
+   * Calculate the winning player
+   * @return player {string}
+   */
   service.getWinner = () => {
     if (player1 === player2) {
       return 'tie';
@@ -50,17 +68,37 @@ angular.module(MODULE_NAME, [])
     }
     return 'player2';
   };
+  /**
+   * Add the JSON result of the game to the
+   * front of the result array
+   */
   service.addResult = (winner) => {
     $sessionStorage.results.unshift({
-      round: $sessionStorage.results.length + 1,
+      game: $sessionStorage.results.length + 1,
       winner: playerMap[winner],
       player1,
       player2
     });
   };
+  /**
+   * Get the last result
+   * @return result {object}
+   */
   service.getLatestResult = () => $sessionStorage.results[0];
+  /**
+   * Get all results
+   * @return results {array}
+   */
   service.getResults = () => $sessionStorage.results;
+  /**
+   * Get number games played
+   * @return games {integer}
+   */
   service.getGameCount = () => Object.keys($sessionStorage.results).length;
+  /**
+   * Get players choices
+   * @return players {object}
+   */
   service.getPlayers = () => ({
     player1,
     player2
@@ -68,7 +106,8 @@ angular.module(MODULE_NAME, [])
 })
 /**
  * @ngdoc controller
- * @name scoreboard.controller:ScoreboardController
+ * @name game.controller:GameController
+ * @param GameService {object} session storage to access scores
  * @param ScoreboardService {object} session storage to access scores
  * @description
  * Initialise the scoreboard and allow the scoreboard to get all scores
@@ -77,13 +116,14 @@ angular.module(MODULE_NAME, [])
 .controller('GameController', function GameController(GameService, ScoreboardService) {
   const controller = this;
   let isPlaying = false;
-
+  controller.init = GameService.init;
   controller.play = (hand) => GameService.play(hand);
   controller.updateScore = (winner) => ScoreboardService.updateScore(winner);
   controller.getLatestResult = () => GameService.getLatestResult();
   controller.getPlayers = () => GameService.getPlayers();
   controller.togglePlayingState = () => isPlaying = !isPlaying;
   controller.getPlayingState = () => isPlaying;
+  controller.init();
 })
 /**
  * @ngdoc directive
@@ -139,6 +179,14 @@ angular.module(MODULE_NAME, [])
     });
   }
 }))
+/**
+ * @ngdoc directive
+ * @name game.directive:gameWinner
+ * @restrict C
+ * @description
+ * Show the winner of the game and update class accordingly
+ */
+ // @ngInject
 .directive('gameWinner', () => ({
   restrict: 'C',
   controller: 'GameController',

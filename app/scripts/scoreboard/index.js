@@ -26,8 +26,19 @@ angular.module(MODULE_NAME, [])
       };
     }
   };
+  /**
+   * Increment the players score
+   */
   service.updateScore = (player) => $sessionStorage.scores[player]++;
+  /**
+   * Get the players score
+   * @return score {integer}
+   */
   service.getScore = (player) => $sessionStorage.scores[player];
+  /**
+   * Get the scores
+   * @return scores {object}
+   */
   service.getScores = () => $sessionStorage.scores;
 })
 /**
@@ -65,6 +76,7 @@ angular.module(MODULE_NAME, [])
     // $scope.score = controller.getScore(attr.player);
     $scope.$watchCollection(controller.getScores, (score, oldScore) => {
       // initial load of page
+      // show the 0 scores
       if (score === oldScore) {
         $scope.score = controller.getScore(attr.player);
         return;
