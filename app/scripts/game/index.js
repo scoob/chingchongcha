@@ -17,21 +17,6 @@ angular.module(MODULE_NAME, [])
 // @ngInject
 .service('GameService', function GameService($sessionStorage, ModeService) {
   const service = this;
-  // Useful maps for game control
-  const hands = ['rock', 'paper', 'scissors'];
-  const winningMap = {
-    rock: 'scissors',
-    paper: 'rock',
-    scissors: 'paper'
-  };
-  const playerMap = {
-    player1: 'Player 1',
-    player2: 'Player 2',
-    tie: 'Tie'
-  };
-  // initialise player choices
-  let player1 = null;
-  let player2 = null;
   // Initialise results if none exist
   service.init = () => {
     if (!$sessionStorage.results) {
@@ -39,17 +24,13 @@ angular.module(MODULE_NAME, [])
     }
   };
   /**
-   * Get player choices and calculate
-   * the winner and store the result
-   * @return winner {string}
+   * Get player choices
+   * @param hand {integer}
+   * @param hands {array}
+   * @return choice {string}
    */
-  service.play = (hand) => {
-    player1 = ModeService.getMode() ? hands[service.randomHand()] : hands[hand]; // get the human choice
-    player2 = hands[service.randomHand()]; // get computer choice
-    const winner = service.getWinner();
-    service.addResult(winner);
-    return winner;
-  };
+  service.getPlayer1 = (hand, hands) => ModeService.getMode() ? hands[service.randomHand()] : hands[hand]; // get the human choice
+  service.getPlayer2 = (hand, hands) => hands[service.randomHand()]; // get the computer choice
   /**
    * Calculate the computers choice randomly
    * @return hand index {integer}
@@ -59,7 +40,7 @@ angular.module(MODULE_NAME, [])
    * Calculate the winning player
    * @return player {string}
    */
-  service.getWinner = () => {
+  service.getWinner = (winningMap, player1, player2) => {
     if (player1 === player2) {
       return 'tie';
     }
@@ -72,10 +53,10 @@ angular.module(MODULE_NAME, [])
    * Add the JSON result of the game to the
    * front of the result array
    */
-  service.addResult = (winner) => {
+  service.addResult = (winner, player1, player2) => {
     $sessionStorage.results.unshift({
       round: $sessionStorage.results.length + 1,
-      winner: playerMap[winner],
+      winner,
       player1,
       player2
     });
@@ -95,14 +76,6 @@ angular.module(MODULE_NAME, [])
    * @return games {integer}
    */
   service.getGameCount = () => Object.keys($sessionStorage.results).length;
-  /**
-   * Get players choices
-   * @return players {object}
-   */
-  service.getPlayers = () => ({
-    player1,
-    player2
-  });
 })
 /**
  * @ngdoc controller
@@ -115,15 +88,36 @@ angular.module(MODULE_NAME, [])
 // @ngInject
 .controller('GameController', function GameController(GameService, ScoreboardService) {
   const controller = this;
+  // Useful maps for game control
+  const hands = ['rock', 'paper', 'scissors'];
+  const winningMap = {
+    rock: 'scissors',
+    paper: 'rock',
+    scissors: 'paper'
+  };
+  const playerMap = {
+    player1: 'Player 1',
+    player2: 'Player 2',
+    tie: 'Tie'
+  };
+  // initialise player choices
+  let player1 = null;
+  let player2 = null;
   let isPlaying = false;
-  controller.init = GameService.init;
-  controller.play = (hand) => GameService.play(hand);
+  GameService.init();
+  // play the game and get the winner
+  controller.play = (hand) => {
+    player1 = GameService.getPlayer1(hand, hands);
+    player2 = GameService.getPlayer2(hand, hands);
+    const winner = GameService.getWinner(winningMap, player1, player2);
+    GameService.addResult(playerMap[winner], player1, player2);
+    return winner;
+  };
+
   controller.updateScore = (winner) => ScoreboardService.updateScore(winner);
   controller.getLatestResult = () => GameService.getLatestResult();
-  controller.getPlayers = () => GameService.getPlayers();
   controller.togglePlayingState = () => isPlaying = !isPlaying;
   controller.getPlayingState = () => isPlaying;
-  controller.init();
 })
 /**
  * @ngdoc directive
@@ -171,7 +165,7 @@ angular.module(MODULE_NAME, [])
   controller: 'GameController',
   scope: true,
   link: function ($scope, $element, attr, controller) {
-    $scope.$watchCollection(controller.getPlayers, (players) => {
+    $scope.$watchCollection(controller.getLatestResult, (players) => {
       if (!players[attr.player]) {
         return;
       }
