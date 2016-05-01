@@ -20,7 +20,8 @@ angular.module(MODULE_NAME, [])
   if (!$sessionStorage.results) {
     $sessionStorage.results = [];
   }
-
+  let player1 = null;
+  let player2 = null;
   const hands = ['rock', 'paper', 'scissors'];
   const winningMap = {
     rock: 'scissors',
@@ -33,23 +34,23 @@ angular.module(MODULE_NAME, [])
     tie: 'Tie'
   };
   service.play = (hand) => {
-    const player1 = hands[hand];
-    const player2 = hands[service.randomHand()];
-    const winner = service.getWinner(player1, player2);
-    service.addResult(winner, player1, player2);
+    player1 = hands[hand];
+    player2 = hands[service.randomHand()];
+    const winner = service.getWinner();
+    service.addResult(winner);
     return winner;
   };
   service.randomHand = () => Math.floor(Math.random() * 3);
-  service.getWinner = (p1, p2) => {
-    if (p1 === p2) {
+  service.getWinner = () => {
+    if (player1 === player2) {
       return 'tie';
     }
-    if (p2 === winningMap[p1]) {
+    if (player2 === winningMap[player1]) {
       return 'player1';
     }
     return 'player2';
   };
-  service.addResult = (winner, player1, player2) => {
+  service.addResult = (winner) => {
     $sessionStorage.results.unshift({
       round: $sessionStorage.results.length + 1,
       winner: playerMap[winner],
@@ -60,6 +61,10 @@ angular.module(MODULE_NAME, [])
   service.getLatestResult = () => $sessionStorage.results[0];
   service.getResults = () => $sessionStorage.results;
   service.getGameCount = () => Object.keys($sessionStorage.results).length;
+  service.getPlayers = () => ({
+    player1,
+    player2
+  });
 })
 /**
  * @ngdoc controller
@@ -71,18 +76,66 @@ angular.module(MODULE_NAME, [])
 // @ngInject
 .controller('GameController', function GameController(GameService, ScoreboardService) {
   const controller = this;
+  let isPlaying = false;
+
   controller.play = (hand) => GameService.play(hand);
   controller.updateScore = (winner) => ScoreboardService.updateScore(winner);
   controller.getLatestResult = () => GameService.getLatestResult();
+  controller.getPlayers = () => GameService.getPlayers();
+  controller.togglePlayingState = () => isPlaying = !isPlaying;
+  controller.getPlayingState = () => isPlaying;
 })
-.directive('playButton', () => ({
+/**
+ * @ngdoc directive
+ * @name game.directive:playButton
+ * @param $timeout {function} force a delay
+ * @restrict A
+ * @description
+ * Register a player's click on a selected hand button
+ */
+ // @ngInject
+.directive('playButton', ($timeout) => ({
   restrict: 'A',
   controller: 'GameController',
   scope: true,
   link: function ($scope, $element, attr, controller) {
     $element.on('click', () => {
-      const winner = controller.play(attr.type);
-      $scope.$apply(() => controller.updateScore(winner));
+      $element.addClass('active'); // highlight the chosen button
+      // let player know what the computer is doing
+      const loadingCircle = angular.element(document.getElementById('loading-circle')).addClass('active');
+      controller.togglePlayingState();
+      // make out like the computer is thinking
+      $timeout(() => {
+        const winner = controller.play(attr.type);
+        controller.updateScore(winner);
+        controller.togglePlayingState();
+        loadingCircle.removeClass('active');
+      }, 3000);
+      // keep chosen button highlighted a little longer
+      $timeout(() => {
+        $element.removeClass('active');
+      }, 4000);
+    });
+  }
+}))
+/**
+ * @ngdoc directive
+ * @name game.directive:playersHand
+ * @restrict C
+ * @description
+ * Provide the chosen hand by the player
+ */
+ // @ngInject
+.directive('playersHand', () => ({
+  restrict: 'C',
+  controller: 'GameController',
+  scope: true,
+  link: function ($scope, $element, attr, controller) {
+    $scope.$watchCollection(controller.getPlayers, (players) => {
+      if (!players[attr.player]) {
+        return;
+      }
+      $scope.hand = players[attr.player];
     });
   }
 }))
