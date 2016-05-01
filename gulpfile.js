@@ -29,13 +29,25 @@ const options = {
 };
 
 gulp.task('dnxdev', dnx('dev', options));
+gulp.task('dnxweb', dnx('web', options));
 
 // Clean and compile all static assets with static analysis warnings
 gulp.task('development', function (callback) {
   runSequence(clean, lint, [scripts, stylesheets, images], [modernizr], [watch, 'dnxdev'], callback);
 });
 
+// Clean and compile all static assets
+gulp.task('production', function (callback) {
+  gulp.isProduction = true;
+  runSequence(clean, [scripts, stylesheets, images], [modernizr], ['dnxweb'], callback);
+});
+
 // Run development task and locally run a static server with compiled assets
 gulp.task('default', function (callback) {
   runSequence('development', callback);
+});
+
+// Run production task
+gulp.task('production', function (callback) {
+  runSequence('production', callback);
 });
