@@ -29,6 +29,7 @@ wwwroot/lib/
 wwwroot/stylesheets/
 wwwroot/scripts/
 wwwroot/images/
+coverage/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
