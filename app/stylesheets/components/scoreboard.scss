@@ -11,3 +11,14 @@
     @include font-size(32px);
   }
 }
+.result {
+  @include font(opensans, extrabold);
+  @include font-size(28px);
+  display:block;
+  height:48px;
+  margin:5px;
+  padding:10px;
+  color:color(green, default);
+  text-align:center;
+  text-transform:uppercase;
+}

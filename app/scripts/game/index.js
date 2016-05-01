@@ -27,8 +27,8 @@ angular.module(MODULE_NAME, [])
     scissors: 'paper'
   };
   const playerMap = {
-    player1: 'You',
-    player2: 'Computer',
+    player1: 'Player 1',
+    player2: 'Player 2',
     tie: 'Tie'
   };
   service.play = (hand) => {
@@ -87,11 +87,12 @@ angular.module(MODULE_NAME, [])
   restrict: 'A',
   controller: 'GameController',
   link: function ($scope, $element, attr, controller) {
+    const message = (winner) => (winner === 'Tie' ? 'Its a Tie' : winner + ' Won !');
     $scope.$watch(controller.getLatestResult, (result, oldResult) => {
       if (result === oldResult) {
         return;
       }
-      $element.text(result.winner);
+      $element.text(message(result.winner));
     });
   }
 }));
