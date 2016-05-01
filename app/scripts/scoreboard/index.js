@@ -52,13 +52,11 @@ angular.module(MODULE_NAME, [])
 .controller('ScoreboardController', function ScoreboardController(ScoreboardService) {
   const controller = this;
   // initialise the scoreboard
-  controller.init = ScoreboardService.init;
+  ScoreboardService.init();
   // get a specific players score
   controller.getScore = (player) => ScoreboardService.getScore(player);
   controller.getScores = () => ScoreboardService.getScores();
   controller.updateScore = (player) => ScoreboardService.updateScore(player);
-
-  controller.init();
 })
 /**
  * @ngdoc directive

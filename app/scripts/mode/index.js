@@ -36,10 +36,9 @@ angular.module(MODULE_NAME, [])
 // @ngInject
 .controller('ModeController', function ModeController(ModeService) {
   const controller = this;
-  controller.init = ModeService.init;
+  ModeService.init();
   controller.setMode = (mode) => ModeService.setMode(mode);
   controller.getMode = () => ModeService.getMode();
-  controller.init();
 })
 /**
  * @ngdoc directive

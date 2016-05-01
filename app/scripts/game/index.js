@@ -100,20 +100,17 @@ angular.module(MODULE_NAME, [])
     player2: 'Player 2',
     tie: 'Tie'
   };
-  // initialise player choices
-  let player1 = null;
-  let player2 = null;
   let isPlaying = false;
+  // initialise
   GameService.init();
   // play the game and get the winner
   controller.play = (hand) => {
-    player1 = GameService.getPlayer1(hand, hands);
-    player2 = GameService.getPlayer2(hand, hands);
+    const player1 = GameService.getPlayer1(hand, hands);
+    const player2 = GameService.getPlayer2(hand, hands);
     const winner = GameService.getWinner(winningMap, player1, player2);
     GameService.addResult(playerMap[winner], player1, player2);
     return winner;
   };
-
   controller.updateScore = (winner) => ScoreboardService.updateScore(winner);
   controller.getLatestResult = () => GameService.getLatestResult();
   controller.togglePlayingState = () => isPlaying = !isPlaying;
