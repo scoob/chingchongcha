@@ -1,14 +1,28 @@
 .button {
   @include font(opensans, extrabold);
   @include font-size(20px);
-  display:inline-block;
+  display:block;
   padding:15px 25px;
   border:0;
+  border-bottom:5px solid color(pink, light);
   border-radius:3px;
+  background:color(pink, default);
   color:color(white);
+  cursor:pointer;
+  text-align:center;
   text-transform:uppercase;
+  transition:transform 0.2s ease-in;
   &:hover {
-    transform:translateY(3px);
+    border-bottom:5px solid color(orange, light);
+    background:color(orange, default);
+    color:color(white);
+    text-decoration:none;
+  }
+  &-icon {
+    margin:0 5px;
+    .fa {
+      @include font-size(50px, 54px);
+    }
   }
   &-inactive {
     border-bottom:5px solid color(grey, light);

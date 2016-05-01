@@ -1,8 +1,11 @@
 .panel {
+  margin:0;
+  border:0;
+  box-shadow:none;
   .panel-title {
     margin:0;
     padding:100px 80px 10px;
-    border-bottom:1px solid color(grey, light);
+    border-bottom:1px solid color(grey, extralight);
     background-repeat:no-repeat;
     background-size:contain;
   }
@@ -29,6 +32,12 @@
   &-mode {
     margin-bottom:30px;
     background:color(grey, extralight);
+    .panel-title {
+      @include font-size(24px);
+      margin:0 0 25px;
+      padding:0;
+      border:0;
+    }
   }
   &-wrapper {
     padding:20px;

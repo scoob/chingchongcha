@@ -36,3 +36,30 @@
   }
   @content;
 }
+// Converts pixel values to rem
+//
+// @param {string} $size The pixel unit
+@function get-rem($size) {
+  @if unit($size) == 'px' {
+    $rem-size:$size / $font-size;
+    @return $rem-size + rem;
+  }
+  @else {
+    @error "$size must be in pixel units";
+    @return false;
+  }
+}
+// Converts pixel vaues to em
+//
+// @param {string} $size The pixel unit
+// @param {string} $base-size The current levels font size
+@function get-em($size, $base-size:$font-size) {
+  @if unit($size) == 'px' {
+    $em-size:$size / $base-size;
+    @return $em-size + em;
+  }
+  @else {
+    @error "$size must be in pixel units";
+    @return false;
+  }
+}

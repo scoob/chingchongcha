@@ -2,9 +2,10 @@
   overflow:hidden;
   span {
     @include font(opensans, bold);
-    @include font-size(21px, 30px);
+    @include font-size(21px);
     display:inline-block;
     float:left;
+    line-height:30px;
     color:color(grey, medium);
     text-transform:uppercase;
   }
