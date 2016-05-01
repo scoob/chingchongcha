@@ -20,6 +20,7 @@ const scripts = require('./gulp/tasks/scripts')(config);
 const clean = require('./gulp/tasks/clean')(config);
 const images = require('./gulp/tasks/images')(config);
 const watch = require('./gulp/tasks/watch')(config);
+const test = require('./gulp/tasks/test')(config);
 
 const options = {
   restore: false,
@@ -32,7 +33,7 @@ gulp.task('dnxdev', dnx('dev', options));
 
 // Clean and compile all static assets with static analysis warnings
 gulp.task('development', function (callback) {
-  runSequence(clean, lint, [scripts, stylesheets, images], [modernizr], [watch, 'dnxdev'], callback);
+  runSequence(clean, lint, [scripts, stylesheets, images], [modernizr], ['test', watch, 'dnxdev'], callback);
 });
 
 // Clean and compile all static assets
@@ -44,4 +45,9 @@ gulp.task('production', function (callback) {
 // Run development task and locally run a static server with compiled assets
 gulp.task('default', function (callback) {
   runSequence('development', callback);
+});
+
+// Test
+gulp.task('test', function () {
+  gulp.start(test);
 });

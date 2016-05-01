@@ -20,13 +20,18 @@ angular.module(MODULE_NAME, [])
   restrict: 'C',
   link: function ($scope, $element) {
     let counter = 60;
+    let timeout;
     $element.text('You got 60 minutes'); // default text
     $scope.onTimeout = () => {
       const countdown = 'You got ' + parseInt(counter, 10) + ' minutes';
       $element.text(countdown);
+      if (counter === 0) {
+        $timeout.cancel(timeout);
+        return;
+      }
       counter--;
-      $timeout($scope.onTimeout, 60000);
+      timeout = $timeout($scope.onTimeout, 60000);
     };
-    $timeout($scope.onTimeout, 60000);
+    timeout = $timeout($scope.onTimeout, 60000);
   }
 }));
