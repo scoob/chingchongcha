@@ -24,6 +24,7 @@
   <div class="col-md-4 panel panel-player player-1" mode-state ng-class="{'computer-mode': mode}">
     <h3 class="panel-title">Player 1</h3>
     <div class="panel-wrapper">
+      <p>Pick your hand and see who wins</p>
       <div class="row no-gutter">
         <div class="col-md-4">
           <a play-button type="0" class="button button-icon"><span class="fa fa-hand-rock-o"></span>Rock</a>
@@ -38,10 +39,7 @@
     </div>
   </div>
   <div class="col-md-4">
-    <div class="result" game-result>
-      {{winner}}
-    </div>
-    <div class="scoreboard no-gutter">
+    <div class="row scoreboard no-gutter">
       <div class="col-md-4">
         <div class="score">
           <h3 class="score-title">Wins</h3>
@@ -59,6 +57,25 @@
           <h3 class="score-title">Wins</h3>
           <span score-player player="player2">{{score}}</span>
         </div>
+      </div>
+    </div>
+    <div class="row no-gutter">
+      <div class="col-12 results-list">
+        <h3 class="results-title">Game {{currentGame}} <span class="game-winner">{{winner}}</span></h3>
+        <div class="results-list-header">
+          <span class="col-md-3">#</span>
+          <span class="col-md-3">Player 1</span>
+          <span class="col-md-3">Winner</span>
+          <span class="col-md-3">Player 2</span>
+        </div>
+        <ul>
+          <li class="result-item" ng-repeat="result in results track by $index">
+            <span class="col-md-3">{{result.round}}</span>
+            <span class="col-md-3"><i class="fa fa-hand-{{result.player1}}-o"></i></span>
+            <span class="col-md-3">{{result.winner}}</span>
+            <span class="col-md-3"><i class="fa fa-hand-{{result.player1}}-o"></i></span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

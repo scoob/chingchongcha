@@ -18,11 +18,13 @@ angular.module(MODULE_NAME, [])
 .service('ScoreboardService', function ScoreboardService($sessionStorage) {
   const service = this;
   service.init = () => {
-    $sessionStorage.scores = {
-      player1: 0,
-      player2: 0,
-      tie: 0
-    };
+    if (!$sessionStorage.scores) {
+      $sessionStorage.scores = {
+        player1: 0,
+        player2: 0,
+        tie: 0
+      };
+    }
   };
   service.updateScore = (player) => $sessionStorage.scores[player]++;
   service.getScore = (player) => $sessionStorage.scores[player];
@@ -44,6 +46,8 @@ angular.module(MODULE_NAME, [])
   controller.getScore = (player) => ScoreboardService.getScore(player);
   controller.getScores = () => ScoreboardService.getScores();
   controller.updateScore = (player) => ScoreboardService.updateScore(player);
+
+  controller.init();
 })
 /**
  * @ngdoc directive

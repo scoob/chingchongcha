@@ -9,17 +9,18 @@ const MODULE_NAME = module.exports = 'game';
 angular.module(MODULE_NAME, [])
 /**
  * @ngdoc service
- * @name dataservices.service:ScoreboardService
- * @param $sessionStorage {object} local storage to access token
+ * @name dataservices.service:GameService
+ * @param $sessionStorage {object} session data
  * @description
- * Service to control the scoring
+ * Service to control game
  */
 // @ngInject
 .service('GameService', function GameService($sessionStorage) {
   const service = this;
-  if (typeof $sessionStorage.rounds === undefined) {
-    $sessionStorage.rounds = [];
+  if (!$sessionStorage.results) {
+    $sessionStorage.results = [];
   }
+
   const hands = ['rock', 'paper', 'scissors'];
   const winningMap = {
     rock: 'scissors',
@@ -35,7 +36,7 @@ angular.module(MODULE_NAME, [])
     const player1 = hands[hand];
     const player2 = hands[service.randomHand()];
     const winner = service.getWinner(player1, player2);
-    service.addRound(winner, player1, player2);
+    service.addResult(winner, player1, player2);
     return winner;
   };
   service.randomHand = () => Math.floor(Math.random() * 3);
@@ -48,15 +49,17 @@ angular.module(MODULE_NAME, [])
     }
     return 'player2';
   };
-  service.addRound = (winner, player1, player2) => {
-    $sessionStorage.rounds.push({
-      round: $sessionStorage.rounds.length + 1,
+  service.addResult = (winner, player1, player2) => {
+    $sessionStorage.results.push({
+      round: $sessionStorage.results.length + 1,
       winner: playerMap[winner],
       player1,
       player2
     });
   };
-  service.getLatestResult = () => $sessionStorage.rounds[$sessionStorage.rounds.length - 1];
+  service.getLatestResult = () => $sessionStorage.results[$sessionStorage.results.length - 1];
+  service.getResults = () => $sessionStorage.results;
+  service.getGameCount = () => Object.keys($sessionStorage.results).length;
 })
 /**
  * @ngdoc controller
@@ -83,8 +86,8 @@ angular.module(MODULE_NAME, [])
     });
   }
 }))
-.directive('gameResult', () => ({
-  restrict: 'A',
+.directive('gameWinner', () => ({
+  restrict: 'C',
   controller: 'GameController',
   link: function ($scope, $element, attr, controller) {
     const message = (winner) => (winner === 'Tie' ? 'Its a Tie' : winner + ' Won !');
@@ -92,6 +95,7 @@ angular.module(MODULE_NAME, [])
       if (result === oldResult) {
         return;
       }
+      $element.addClass(result.winner.toLowerCase().replace(' ', '-') + '-game');
       $element.text(message(result.winner));
     });
   }

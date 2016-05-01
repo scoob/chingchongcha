@@ -1,0 +1,32 @@
+.game-winner {
+  margin-left:15px;
+  color:color(green, default);
+  &.tie-game {
+    color:color(orange, default);
+  }
+  &.player-2-game {
+    color:color(red, flat);
+  }
+}
+.results-list {
+  ul {
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  .results-list-header {
+    @include font-size(21px);
+    @include font(opensans, bold);
+    overflow:hidden;
+    margin:0 0 10px;
+    padding:0 0 10px;
+    border-bottom:1px solid color(grey, extralight);
+  }
+  .result-item {
+    @include font-size(21px);
+    text-align:center;
+    .fa {
+      @include font-size(40px);
+    }
+  }
+}
