@@ -1,0 +1,6 @@
+.countdown {
+  @include font(opensans, extrabold);
+  @include font-size(32px);
+  float:right;
+  margin:25px;
+}
