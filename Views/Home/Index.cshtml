@@ -25,8 +25,10 @@
   <div class="col-md-4 panel panel-player player-1" mode-state ng-class="{'computer-mode': mode}">
     <h3 class="panel-title">Player 1</h3>
     <div class="panel-wrapper">
-      <p>Pick your hand and see who wins</p>
-      <div class="row no-gutter">
+      <div class="row no-gutter" ng-class="{'hide': mode}">
+        <div class="col-md-12">
+          <p>Pick your hand and see who wins</p>
+        </div>
         <div class="col-md-4">
           <a play-button type="0" class="button button-icon"><span class="fa fa-hand-rock-o"></span>Rock</a>
         </div>
@@ -36,9 +38,14 @@
         <div class="col-md-4">
           <a play-button type="2" class="button button-icon"><span class="fa fa-hand-scissors-o"></span>Scissors</a>
         </div>
-        <!-- <div class="col-md-12">
-          <span class="players-hand" player="player1"><i class="fa fa-hand-{{hand}}-o"></i><span>{{hand}}</span></span>
-        </div>//-->
+      </div>
+      <div class="row no-gutter" ng-class="{'hide': !mode}">
+        <div class="col-md-12">
+          <p>Press play and let the computer do the thinking</p>
+        </div>
+        <div class="col-md-4">
+          <a play-button type="-1" class="button button-icon"><span class="fa fa-play"></span>Play</a>
+        </div>
       </div>
     </div>
   </div>

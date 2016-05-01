@@ -196,6 +196,10 @@ angular.module(MODULE_NAME, [])
       if (result === oldResult) {
         return;
       }
+      // remove all winner classes
+      $element.removeClass('tie-game');
+      $element.removeClass('player-1-game');
+      $element.removeClass('player-2-game');
       $element.addClass(result.winner.toLowerCase().replace(' ', '-') + '-game');
       $element.text(message(result.winner));
     });
